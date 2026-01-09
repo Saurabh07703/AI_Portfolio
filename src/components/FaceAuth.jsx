@@ -26,7 +26,23 @@ const FaceAuth = ({ onClose, onLoginSuccess, isEmbedded = false }) => {
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
-        return imageSrc;
+
+        // Resize image to reduce payload size and processing time
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                // Force max width 320px (FaceNet only needs 160px)
+                const scale = 320 / img.width;
+                canvas.width = 320;
+                canvas.height = img.height * scale;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL('image/jpeg', 0.8));
+            };
+            img.src = imageSrc;
+        });
     }, [webcamRef]);
 
     // Convert base64 to blob for file upload
@@ -42,7 +58,7 @@ const FaceAuth = ({ onClose, onLoginSuccess, isEmbedded = false }) => {
     };
 
     const handleAction = async () => {
-        const imageSrc = capture();
+        const imageSrc = await capture();
         if (!imageSrc) {
             setMessage('Failed to capture image. Please try again.');
             setMessageType('error');

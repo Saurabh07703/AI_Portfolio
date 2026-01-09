@@ -55,7 +55,15 @@ def process_image(image_file: UploadFile):
         image = Image.open(io.BytesIO(image_bytes))
         # Convert to RGB if not already (e.g. if PNG has alpha)
         if image.mode != 'RGB':
-            image = image.convert('RGB')
+        image = image.convert('RGB')
+        
+        # Optimization: Resize heavy images to speed up MTCNN
+        if image.width > 600:
+             # Maintain aspect ratio
+             ratio = 600 / image.width
+             new_height = int(image.height * ratio)
+             image = image.resize((600, new_height), Image.Resampling.LANCZOS)
+             
         return image
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid image file: {e}")
