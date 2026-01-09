@@ -6,6 +6,10 @@ from recommender import Recommender
 from forecaster import Forecaster
 import uvicorn
 import traceback
+from pydantic import BaseModel
+from rag_engine import RAGEngine
+import face_auth
+import voice_agent
 
 app = FastAPI(title="AI Jewelry Recommendation & Forecasting API")
 
@@ -22,6 +26,20 @@ app.add_middleware(
 DATA_PATH = "jewelry_combined.csv"
 recommender = Recommender(DATA_PATH)
 forecaster = Forecaster(DATA_PATH)
+rag_engine = RAGEngine(DATA_PATH)
+
+app.include_router(face_auth.router)
+app.include_router(voice_agent.router)
+
+@app.on_event("startup")
+async def startup_event():
+    # Pre-load FaceNet models to avoid latency on first request
+    print("Pre-loading Face Recognition models...")
+    face_auth.get_models()
+    print("Face Recognition models ready.")
+    
+    # Inject RAGEngine dependency into Voice Agent
+    voice_agent.set_rag_engine(rag_engine)
 
 @app.get("/")
 def read_root():
@@ -79,5 +97,18 @@ def list_products(limit: int = 50):
         })
     return formatted
 
+class ChatRequest(BaseModel):
+    message: str
+
+@app.post("/chat")
+def chat_endpoint(request: ChatRequest):
+    try:
+        response = rag_engine.process_query(request.message)
+        return response
+    except Exception as e:
+        print(f"Error in chat: {e}")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)

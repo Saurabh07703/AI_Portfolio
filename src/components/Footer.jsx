@@ -32,6 +32,13 @@ const Footer = () => {
                             <li>-25% Inventory Costs</li>
                         </ul>
                     </div>
+
+                    <div className="footer-section">
+                        <h4>Contact AI Agent</h4>
+                        <p>Talk to our Voice Representative:</p>
+                        <a href="tel:+15550199834" className="voice-number">📞 +1 (555) 019-9834</a>
+                        <p className="small-text">(Demo: Requires Twilio Setup)</p>
+                    </div>
                 </div>
 
                 <div className="footer-bottom">

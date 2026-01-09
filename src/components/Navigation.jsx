@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Navigation.css';
 
-const Navigation = () => {
+const Navigation = ({ onLoginClick, user }) => {
   const [activeSection, setActiveSection] = useState('hero');
   const [scrolled, setScrolled] = useState(false);
 
@@ -60,6 +60,24 @@ const Navigation = () => {
                 </button>
               </li>
             ))}
+            <li key="auth">
+              <button
+                className="nav-link auth-btn"
+                onClick={onLoginClick}
+                style={{
+                  background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+                  border: 'none',
+                  borderRadius: '20px',
+                  padding: '8px 20px',
+                  marginLeft: '15px',
+                  color: 'white',
+                  fontWeight: '600',
+                  boxShadow: '0 4px 15px rgba(124, 58, 237, 0.4)'
+                }}
+              >
+                {user ? `👤 ${user}` : '🔑 Face Login'}
+              </button>
+            </li>
           </ul>
         </div>
       </div>

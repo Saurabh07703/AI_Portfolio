@@ -6,3 +6,9 @@ scikit-learn
 statsmodels
 python-multipart
 gunicorn
+sentence-transformers
+facenet-pytorch
+torch
+torchvision
+pillow
+
