@@ -1,0 +1,188 @@
+.app {
+  min-height: 100vh;
+}
+
+/* Section Spacing */
+.subsection-title {
+  font-size: var(--font-size-3xl);
+  text-align: center;
+  margin: var(--space-3xl) 0 var(--space-2xl);
+  background: var(--color-accent-multi);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Objectives Section */
+.objectives-section {
+  margin-top: var(--space-3xl);
+}
+
+.objective-card {
+  padding: var(--space-xl);
+}
+
+.objective-card h4 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-md);
+  color: var(--color-text-primary);
+}
+
+.objective-list {
+  list-style: none;
+  padding: 0;
+}
+
+.objective-list li {
+  padding: var(--space-sm) 0;
+  padding-left: var(--space-lg);
+  color: var(--color-text-secondary);
+  position: relative;
+  line-height: 1.6;
+}
+
+.objective-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-gold);
+  font-weight: bold;
+  font-size: var(--font-size-lg);
+}
+
+/* Technical Deep Dive */
+.technical-deep-dive {
+  margin-top: var(--space-3xl);
+}
+
+.tech-detail-card {
+  padding: var(--space-xl);
+}
+
+.tech-detail-card h4 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-md);
+}
+
+.tech-detail-card p {
+  margin-bottom: var(--space-md);
+  color: var(--color-text-secondary);
+}
+
+.tech-list {
+  list-style: none;
+  padding: 0;
+}
+
+.tech-list li {
+  padding: var(--space-xs) 0;
+  padding-left: var(--space-lg);
+  color: var(--color-text-secondary);
+  position: relative;
+  line-height: 1.6;
+}
+
+.tech-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  background: var(--color-accent-multi);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tech-list strong {
+  color: var(--color-text-primary);
+}
+
+/* ARIMA Details */
+.arima-details {
+  margin-top: var(--space-3xl);
+}
+
+.arima-component {
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.component-label {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-accent-purple);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-md);
+}
+
+.arima-component h4 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-sm);
+  color: var(--color-text-primary);
+}
+
+.arima-component p {
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.metrics-category {
+  font-size: var(--font-size-2xl);
+  text-align: center;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+/* Learning Cards */
+.learning-card {
+  padding: var(--space-xl);
+}
+
+.learning-card h4 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-md);
+  color: var(--color-text-primary);
+}
+
+.learning-list {
+  list-style: none;
+  padding: 0;
+}
+
+.learning-list li {
+  padding: var(--space-sm) 0;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.learning-list strong {
+  color: var(--color-text-primary);
+  background: var(--color-accent-multi);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .subsection-title {
+    font-size: var(--font-size-2xl);
+    margin: var(--space-2xl) 0 var(--space-lg);
+  }
+
+  .objective-card,
+  .tech-detail-card,
+  .arima-component,
+  .learning-card {
+    padding: var(--space-lg);
+  }
+}

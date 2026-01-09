@@ -1,0 +1,340 @@
+.demo-container {
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 12px;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.demo-select {
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-family: inherit;
+    min-width: 200px;
+}
+
+.demo-button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.demo-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.product-card {
+    padding: 1.8rem;
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+.product-card h4 {
+    margin: 1rem 0 0.5rem;
+    font-size: 1.1rem;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
+
+.product-card p {
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+}
+
+.product-img-small {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.product-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+}
+
+.price {
+    color: #818cf8;
+    font-weight: 800;
+    font-size: 1.4rem;
+    margin: 1rem 0;
+}
+
+.product-card small {
+    display: block;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75rem;
+}
+
+/* Chart Styles */
+.chart-legend {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.legend-box {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.legend-box.history {
+    background: #3b82f6;
+}
+
+.legend-box.forecast {
+    background: #8b5cf6;
+}
+
+.chart-wrapper {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 3rem 1.5rem 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Smart Grid Lines */
+.chart-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 3rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 4.5rem;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 100% 25%;
+    pointer-events: none;
+}
+
+.chart-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 250px;
+    min-width: 600px;
+    /* Ensure enough space for all bars */
+    padding-bottom: 30px;
+}
+
+.chart-bar-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.chart-bar {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    transform-origin: bottom;
+    animation: growBar 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards;
+}
+
+@keyframes growBar {
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}
+
+.history .chart-bar {
+    background: linear-gradient(to top, #1d4ed8, #3b82f6);
+}
+
+.forecast .chart-bar {
+    background: linear-gradient(to top, #6d28d9, #8b5cf6);
+}
+
+.chart-bar:hover {
+    transform: scaleX(1.1);
+    filter: brightness(1.2);
+}
+
+.chart-label {
+    font-size: 0.65rem;
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+    transform: rotate(-45deg);
+    transform-origin: top left;
+    height: 30px;
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: #1e293b;
+    color: white;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chart-bar-wrapper:hover .tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.tooltip-date {
+    display: block;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.7rem;
+    margin-bottom: 2px;
+}
+
+.tooltip-value {
+    font-weight: bold;
+    color: #818cf8;
+}
+
+.attributes {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge.gem {
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge.metal {
+    background: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.no-data {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+}
+
+.chart-outer-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: flex-start;
+}
+
+.y-axis-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+    padding-bottom: 60px;
+    /* Account for rotated labels */
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.3);
+    text-align: right;
+    width: 30px;
+}
+
+.today-marker {
+    position: relative;
+    border-left: 2px dashed rgba(139, 92, 246, 0.4);
+    margin-left: -1px;
+    /* Overlap with grid slightly */
+    padding-left: 4px;
+}
+
+.today-marker::after {
+    content: 'TODAY';
+    position: absolute;
+    top: -25px;
+    left: 4px;
+    font-size: 0.6rem;
+    color: #8b5cf6;
+    font-weight: bold;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.chart-axis {
+    text-align: center;
+    margin-top: 3.5rem;
+    /* Increased to account for rotated labels */
+    color: rgba(255, 255, 255, 0.4);
+}

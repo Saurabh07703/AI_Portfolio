@@ -1,0 +1,42 @@
+.metric-counter {
+    text-align: center;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-base);
+}
+
+.metric-counter:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.metric-value-large {
+    font-size: var(--font-size-5xl);
+    font-weight: 800;
+    font-family: var(--font-display);
+    background: var(--color-accent-multi);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-sm);
+    line-height: 1;
+}
+
+.metric-label-large {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .metric-value-large {
+        font-size: var(--font-size-4xl);
+    }
+
+    .metric-label-large {
+        font-size: var(--font-size-base);
+    }
+}
