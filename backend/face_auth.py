@@ -55,7 +55,7 @@ def process_image(image_file: UploadFile):
         image = Image.open(io.BytesIO(image_bytes))
         # Convert to RGB if not already (e.g. if PNG has alpha)
         if image.mode != 'RGB':
-        image = image.convert('RGB')
+            image = image.convert('RGB')
         
         # Optimization: Resize heavy images to speed up MTCNN
         if image.width > 600:
