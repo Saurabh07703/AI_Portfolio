@@ -12,7 +12,24 @@ class RAGEngine:
         self.products_df = None
         self.embeddings = None
         self.model = None # Lazy load
+        self.products_df = None
+        self.embeddings = None
+        
+        # Paths for caching
+        self.cache_dir = os.path.join(os.path.dirname(__file__), "data")
+        os.makedirs(self.cache_dir, exist_ok=True)
+        self.embeddings_file = os.path.join(self.cache_dir, "embeddings.npy")
+        
+        # Load data immediately (fast)
         self.load_data()
+        
+        # Try loading embeddings from cache to avoid re-computing
+        if os.path.exists(self.embeddings_file):
+            print("Loading cached embeddings...")
+            self.embeddings = np.load(self.embeddings_file)
+            print("Embeddings loaded.")
+        else:
+            print("No cached embeddings found. Will compute lazily or via build script.")
 
     def get_model(self):
         if self.model is None:
@@ -37,18 +54,34 @@ class RAGEngine:
             return f"Category: {x['Category']}. Material: {x['Material']}. Style: {x['Style']}. Color: {x['Color']}. Gender: {x['Gender']}. Occasion: {x['Occasion']}. Name: {x['ProductName']}."
 
         self.products_df['search_text'] = self.products_df.apply(create_search_text, axis=1)
-        
-        # Pre-compute embeddings
-        print("Computing product embeddings...")
+
+    def ensure_embeddings(self):
+        """
+        Ensures embeddings are available. Computes and saves them if missing.
+        """
+        if self.embeddings is not None:
+            return
+
+        print("Computing product embeddings (this may take a while)...")
         self.embeddings = self.get_model().encode(self.products_df['search_text'].tolist(), show_progress_bar=True)
-        print("RAG Engine initialized.")
+        
+        # Save to cache
+        try:
+             np.save(self.embeddings_file, self.embeddings)
+             print(f"Embeddings saved to {self.embeddings_file}")
+        except Exception as e:
+             print(f"Failed to save embeddings cache: {e}")
 
     def search_products(self, query, n=4):
         """
         Retrieves the top N products matching the query using semantic search.
         """
-        if self.products_df is None or self.embeddings is None:
-            return []
+        if self.products_df is None:
+             return []
+             
+        self.ensure_embeddings()
+        if self.embeddings is None:
+             return []
 
         # Encode the query
         query_embedding = self.get_model().encode([query])
