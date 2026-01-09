@@ -33,10 +33,8 @@ app.include_router(voice_agent.router)
 
 @app.on_event("startup")
 async def startup_event():
-    # Pre-load FaceNet models to avoid latency on first request
-    print("Pre-loading Face Recognition models...")
-    face_auth.get_models()
-    print("Face Recognition models ready.")
+    # Note: We removed explicit model pre-loading to ensure fast startup for Render.
+    # Models will be loaded lazily on the first request.
     
     # Inject RAGEngine dependency into Voice Agent
     voice_agent.set_rag_engine(rag_engine)

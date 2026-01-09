@@ -11,10 +11,14 @@ class RAGEngine:
         self.df = None
         self.products_df = None
         self.embeddings = None
-        # Load a lightweight, high-performance model for local embeddings
-        print("Loading embedding model...")
-        self.model = SentenceTransformer('all-MiniLM-L6-v2')
+        self.model = None # Lazy load
         self.load_data()
+
+    def get_model(self):
+        if self.model is None:
+            print("Loading embedding model (Lazy)...")
+            self.model = SentenceTransformer('all-MiniLM-L6-v2')
+        return self.model
 
     def load_data(self):
         if not os.path.exists(self.data_path):
@@ -36,7 +40,7 @@ class RAGEngine:
         
         # Pre-compute embeddings
         print("Computing product embeddings...")
-        self.embeddings = self.model.encode(self.products_df['search_text'].tolist(), show_progress_bar=True)
+        self.embeddings = self.get_model().encode(self.products_df['search_text'].tolist(), show_progress_bar=True)
         print("RAG Engine initialized.")
 
     def search_products(self, query, n=4):
@@ -47,7 +51,7 @@ class RAGEngine:
             return []
 
         # Encode the query
-        query_embedding = self.model.encode([query])
+        query_embedding = self.get_model().encode([query])
         
         # Compute similarity
         similarities = cosine_similarity(query_embedding, self.embeddings).flatten()
