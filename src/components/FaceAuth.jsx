@@ -81,7 +81,7 @@ const FaceAuth = ({ onClose, onLoginSuccess, isEmbedded = false }) => {
                     return;
                 }
                 formData.append('name', name);
-                const res = await axios.post(`${API_URL}/face/register`, formData, { timeout: 60000 });
+                const res = await axios.post(`${API_URL}/face/register`, formData, { timeout: 120000 });
                 setMessage(res.data.message);
                 setMessageType('success');
                 setTimeout(() => {
@@ -89,7 +89,7 @@ const FaceAuth = ({ onClose, onLoginSuccess, isEmbedded = false }) => {
                     setMessage(null);
                 }, 2000);
             } else {
-                const res = await axios.post(`${API_URL}/face/recognize`, formData, { timeout: 60000 });
+                const res = await axios.post(`${API_URL}/face/recognize`, formData, { timeout: 120000 });
                 if (res.data.match) {
                     setMessage(`Welcome back, ${res.data.user}!`);
                     setMessageType('success');
@@ -106,7 +106,7 @@ const FaceAuth = ({ onClose, onLoginSuccess, isEmbedded = false }) => {
             let errorMessage = 'An error occurred.';
 
             if (err.code === 'ECONNABORTED') {
-                errorMessage = 'Request timed out. Server is starting up, please try again.';
+                errorMessage = 'Server is warming up (it may take up to 2 mins). Please try again in a moment.';
             } else if (err.response && err.response.data && err.response.data.detail) {
                 errorMessage = err.response.data.detail;
             } else if (err.message) {
