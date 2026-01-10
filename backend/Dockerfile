@@ -4,6 +4,11 @@ FROM python:3.9-slim
 # Set the working directory to /app
 WORKDIR /app
 
+# Install system dependencies required for Scikit-learn and Torch 
+RUN apt-get update && apt-get install -y \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Create a non-root user (required by Hugging Face Spaces)
 RUN useradd -m -u 1000 user
 USER user
