@@ -70,6 +70,10 @@
     position: relative;
     border: 3px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 40px rgba(124, 58, 237, 0.3);
+    /* Ensure content is centered */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .webcam-view {
@@ -78,6 +82,9 @@
     object-fit: cover;
     transform: scaleX(-1);
     /* Mirror effect */
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .scan-frame {
