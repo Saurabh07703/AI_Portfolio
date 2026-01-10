@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import './FaceAuth.css';
 
 // Configure based on your API URL
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001';
+const API_URL = import.meta.env.VITE_API_URL || 'https://saurabh07703-ai-jewelry-backend.hf.space';
 
 const FaceAuth = ({ onClose, onLoginSuccess, isEmbedded = false }) => {
     const webcamRef = useRef(null);

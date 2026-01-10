@@ -73,8 +73,8 @@ const VoiceAgent = () => {
         setTranscript("Thinking...");
 
         try {
-            // Force localhost for development to avoid hitting production Render server
-            const apiUrl = 'http://localhost:8001';
+            // Use environment variable or production fallback
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://saurabh07703-ai-jewelry-backend.hf.space';
             console.log("Sending voice query to:", apiUrl + '/voice/chat');
 
             const res = await fetch(`${apiUrl}/voice/chat`, {

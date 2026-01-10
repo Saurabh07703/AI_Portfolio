@@ -36,8 +36,8 @@ const Chatbot = () => {
         setIsLoading(true);
 
         try {
-            // Force localhost for development to avoid hitting production Render server
-            const apiUrl = 'http://localhost:8001';
+            // Use environment variable or production fallback
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://saurabh07703-ai-jewelry-backend.hf.space';
             console.log("Chatbot sending request to:", apiUrl + '/chat');
 
             const response = await fetch(`${apiUrl}/chat`, {
@@ -66,7 +66,7 @@ const Chatbot = () => {
 
         } catch (error) {
             console.error("Chat error details:", error);
-            setMessages(prev => [...prev, { type: 'bot', text: `Error connecting to http://localhost:8000: ${error.message}` }]);
+            setMessages(prev => [...prev, { type: 'bot', text: `Error connecting to server: ${error.message}` }]);
         } finally {
             setIsLoading(false);
         }
