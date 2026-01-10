@@ -2,12 +2,13 @@ import os
 import json
 import base64
 import io
-import torch
+import io
+# import torch # Lazy loaded
 import numpy as np
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Body
 from pydantic import BaseModel
 from PIL import Image
-from facenet_pytorch import MTCNN, InceptionResnetV1
+# from facenet_pytorch import MTCNN, InceptionResnetV1 # Lazy loaded
 from sklearn.metrics.pairwise import cosine_similarity
 
 router = APIRouter(tags=["Face Authentication"])
@@ -25,6 +26,9 @@ def get_models():
     global mtcnn, resnet
     if mtcnn is None:
         print("Loading FaceNet models...")
+        import torch
+        from facenet_pytorch import MTCNN, InceptionResnetV1
+        
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         # MTCNN for face detection (using keep_all=False to get the best face)
         mtcnn = MTCNN(image_size=160, margin=0, keep_all=False, device=device)

@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer # Lazy loaded
 from sklearn.metrics.pairwise import cosine_similarity
 import os
 import random
@@ -34,6 +34,7 @@ class RAGEngine:
     def get_model(self):
         if self.model is None:
             print("Loading embedding model (Lazy)...")
+            from sentence_transformers import SentenceTransformer
             self.model = SentenceTransformer('all-MiniLM-L6-v2')
         return self.model
 
