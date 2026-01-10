@@ -6,10 +6,12 @@ WORKDIR /app
 
 # Install system dependencies
 # libgomp1: for scikit-learn/torch
-# libgl1-mesa-glx: for potential opencv dependencies in image libs
+# libgl1: generic OpenGL support for image libs
+# libglib2.0-0: required by cv2/image processing
 RUN apt-get update && apt-get install -y \
     libgomp1 \
-    libgl1-mesa-glx \
+    libgl1 \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Set env vars for better logging and caching
