@@ -21,14 +21,14 @@ ENV PYTHONUNBUFFERED=1 \
     TRANSFORMERS_CACHE=/app/cache/transformers \
     TORCH_HOME=/app/cache/torch
 
+# Create cache directories with correct permissions (Run as root before switching user)
+RUN mkdir -p /app/cache/transformers /app/cache/torch /app/data && \
+    chmod -R 777 /app/cache /app/data
+
 # Create a non-root user
 RUN useradd -m -u 1000 user
 USER user
 ENV PATH="/home/user/.local/bin:$PATH"
-
-# Create cache directories with correct permissions
-RUN mkdir -p /app/cache/transformers /app/cache/torch /app/data && \
-    chmod -R 777 /app/cache /app/data
 
 # Copy the requirements file
 COPY --chown=user requirements.txt .
