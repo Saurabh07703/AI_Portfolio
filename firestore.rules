@@ -1,0 +1,37 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default rule: Deny all read/write access to everyone by default.
+    // This is the most secure starting point.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // -------------------------------------------------------------------
+    // EXAMPLES (Commented out - Enable as needed)
+    // -------------------------------------------------------------------
+
+    // Example 1: User-specific data
+    // Allow users to read and write only their own documents in the 'users' collection.
+    // Assumes you are using Firebase Authentication.
+    // match /users/{userId} {
+    //   allow read, write: if request.auth != null && request.auth.uid == userId;
+    // }
+
+    // Example 2: Public read-only data
+    // Allow anyone to read documents in the 'products' collection, but only admins to write.
+    // match /products/{productId} {
+    //   allow read: if true;
+    //   allow write: if request.auth != null && request.auth.token.admin == true;
+    // }
+
+    // Example 3: Authenticated-only access
+    // Allow any signed-in user to read, but no one to write (write via Admin SDK only).
+    // match /some_collection/{docId} {
+    //   allow read: if request.auth != null;
+    //   allow write: if false;
+    // }
+  }
+}
