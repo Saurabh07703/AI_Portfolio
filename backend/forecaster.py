@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.tsa.statespace.sarimax import SARIMAX
 import os
 
 class Forecaster:
@@ -55,18 +55,27 @@ class Forecaster:
         forecast_data = []
         if len(sales_series) >= 3:
             try:
-                # Train ARIMA(1,1,0) - simple for small datasets
-                model = ARIMA(sales_series.values, order=(1, 1, 0))
-                model_fit = model.fit()
+                # Detect frequency to set seasonal period
+                freq = 'MS' if (len(sales_series) > 1 and sales_series.index[1].day == sales_series.index[0].day) else 'D'
+                seasonal_period = 12 if freq == 'MS' else 7
+                
+                # Determine configuration based on available data
+                # SARIMA needs sufficient data (e.g., at least 2 full seasonal cycles)
+                if len(sales_series) >= seasonal_period * 2:
+                    seasonal_order = (1, 1, 0, seasonal_period)
+                else:
+                    seasonal_order = (0, 0, 0, 0)
+                
+                # Train SARIMAX model
+                model = SARIMAX(sales_series.values, order=(1, 1, 0), seasonal_order=seasonal_order)
+                # disp=False suppresses convergence output
+                model_fit = model.fit(disp=False)
                 
                 # Forecast
                 forecast = model_fit.forecast(steps=days)
                 
                 # Generate future dates
                 last_date = sales_series.index.max()
-                # Assuming monthly if dates are 1st of month, else daily
-                # Let's detect frequency or default to daily
-                freq = 'MS' if sales_series.index[1].day == sales_series.index[0].day else 'D'
                 future_dates = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=days, freq=freq)
 
                 for d, v in zip(future_dates, forecast):
